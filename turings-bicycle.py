@@ -1,8 +1,11 @@
 from math import pi
 
+# introduction
+print "Turing's bicycle has a rear rim with a bent spoke and a chain with a weak link. When the bent spoke and weak link come in contact with each other the chain falls off. Input some information about the bicycle to calculate how far it can be ridden before the chain falls off."
+
 # get information about the bike
 tire_diameter = float(raw_input("What's the rear tire's outer diameter in milimeters?: "))
-chain_total_links = int(raw_input("How many links on the chain?: "))
+chain_total_links = int(raw_input("How many links in the chain?: "))
 sprocket_total_teeth = int(raw_input("How many teeth on the sprocket?: "))
 chain_position = int(raw_input("The bent spoke is now touching the the chain. How many chain links away is the weak link?: ")) % chain_total_links
 
