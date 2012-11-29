@@ -1,3 +1,9 @@
+# todos:
+# calculate if chain will never fall off
+# format print output widths
+# give users common bike info hints to questions?
+# input tests
+
 from math import pi
 
 # introduction
