@@ -5,12 +5,13 @@ chain_total_links = int(raw_input("How many links on the chain?: "))
 sprocket_total_teeth = int(raw_input("How many teeth on the sprocket?: "))
 #chain_weak_link = 0 # starting position of the weak link relative to the sprocket
 #rim_bent_spoke = 0 # starting position of the bent spoke in degrees relative to the sprocket
-tire_circumference = tire_diameter * pi
+tire_circumference = tire_diameter * pi # milimeters
 chain_position = 0
 sprocket_revolutions = 0
 distance_traveled = 0.0
 units = 'milimeters'
-while sprocket_revolutions < 201:
+chain_on = True
+while sprocket_revolutions < 501:
   sprocket_revolutions += 1
   chain_position = (chain_position + sprocket_total_teeth) % chain_total_links
   distance_traveled += tire_circumference
@@ -23,4 +24,7 @@ while sprocket_revolutions < 201:
       distance_traveled /= 1000
     print 'The bike can travel %.2f %s before the chain will fall off.' % (distance_traveled, units)
     #print 'The chain fell off after %d sprocket revolutions' % sprocket_revolutions
+    chain_on = False
     break
+if chain_on == True:
+  print 'The bike can travel at least %.2f %s before the chain will fall off.' % (distance_traveled, units)
