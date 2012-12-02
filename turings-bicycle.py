@@ -7,13 +7,13 @@
 from math import pi
 
 # introduction
-print "Turing's bicycle has a rear rim with a bent spoke and a chain with a weak link. When the bent spoke and weak link come in contact with each other the chain falls off. Input some information about the bicycle to calculate how far it can be ridden before the chain falls off."
+print "\nTuring's bicycle has a rear rim with a bent spoke and a chain with a weak link. When the bent spoke and weak link come in contact with each other the chain falls off. Input some information about the bicycle to calculate how far it can be ridden before the chain falls off.\n"
 
 # get information about the bike
-tire_diameter = float(raw_input("What's the rear tire's outer diameter in milimeters?: "))
-chain_total_links = int(raw_input("How many links in the chain?: "))
-sprocket_total_teeth = int(raw_input("How many teeth on the sprocket?: "))
-chain_position = int(raw_input("The bent spoke is now touching the the chain. How many chain links away is the weak link?: ")) % chain_total_links
+tire_diameter = float(raw_input("  What's the rear tire's outer diameter in milimeters?: "))
+chain_total_links = int(raw_input("  How many links in the chain?: "))
+sprocket_total_teeth = int(raw_input("  How many teeth on the sprocket?: "))
+chain_position = int(raw_input("  The bent spoke is now touching the the chain. How many chain links away is the weak link?: ")) % chain_total_links
 
 tire_circumference = tire_diameter * pi # milimeters
 sprocket_revolutions = 0
@@ -40,7 +40,7 @@ if distance_traveled > 1000:
 
 # give user the result
 if chain_on == True:
-  print 'The bike can travel at least %.2f %s before the chain falls off.' % (distance_traveled, units)
+  print '\nThe bike can be ridden at least %.2f %s before the chain falls off.\n' % (distance_traveled, units)
 else:
-  print 'The bike can travel %.2f %s before the chain falls off.' % (distance_traveled, units)
+  print '\nThe bike can be ridden %.2f %s before the chain falls off.\n' % (distance_traveled, units)
   #print 'The chain fell off after %d sprocket revolutions' % sprocket_revolutions
