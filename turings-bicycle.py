@@ -1,20 +1,24 @@
 # todos:
 # detect states where chain never falls off
 # specify wheel start position
-# format print output widths
 # give users common bike info hints to questions?
 # input tests
 
 from math import pi
 
 # introduction
-print "\nTuring's bicycle has a rear rim with a bent spoke and a chain with a weak link. When the bent spoke and weak link come in contact with each other the chain falls off. Input some information about the bicycle to calculate how far it can be ridden before the chain falls off.\n"
+print """
+Turing's bicycle has a rear rim with a bent spoke and a chain with a weak link.
+When the bent spoke and weak link come in contact with each other the chain
+falls off. Input some information about the bicycle to calculate how far it can
+be ridden before the chain falls off:
+"""
 
 # get information about the bike from user
 tire_diameter = float(raw_input("  What's the rear tire's outer diameter in milimeters?: "))
 chain_total_links = int(raw_input("  How many links in the chain?: "))
 sprocket_total_teeth = int(raw_input("  How many teeth on the sprocket?: "))
-chain_position = int(raw_input("  The bent spoke is now touching the the chain. How many chain links away is the weak link?: ")) % chain_total_links
+chain_position = int(raw_input("  The bent spoke is now touching the the chain. How many chain links away is \n  the weak link?: ")) % chain_total_links
 
 tire_circumference = tire_diameter * pi # milimeters
 sprocket_revolutions = 0
@@ -43,6 +47,7 @@ while sprocket_revolutions < 501 and chain_on != 2:
     break
 
 # convert distance traveled to meters or kilometers if needed
+# def metric_conversion
 if distance_traveled > 1000:
   units = 'meters'
   distance_traveled /= 1000
