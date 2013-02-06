@@ -2,7 +2,7 @@
 # detect states where chain never falls off
 # specify wheel start position
 # give users common bike info hints to questions?
-# input tests
+# loop program
 
 from math import pi
 
@@ -10,15 +10,28 @@ from math import pi
 print """
 Turing's bicycle has a rear rim with a bent spoke and a chain with a weak link.
 When the bent spoke and weak link come in contact with each other the chain
-falls off. Input some information about the bicycle to calculate how far it can
-be ridden before the chain falls off:
+falls off. Input some information about the bicycle to calculate how far 
+it can be ridden before the chain falls off:
 """
+# function to test user input to questions is a number
+def answerEval(question, valueType):
+  while True:
+    try:
+      answer = valueType(raw_input(question))
+      if answer < 0:
+        raise ValueError
+      return answer
+    except ValueError:
+      if valueType == int:
+        print "  ^ Enter a positive whole number..."
+      else:
+        print "  ^ Enter a positive number..."
 
 # get information about the bike from user
-tire_diameter = float(raw_input("  What's the rear tire's outer diameter in milimeters?: "))
-chain_total_links = int(raw_input("  How many links in the chain?: "))
-sprocket_total_teeth = int(raw_input("  How many teeth on the sprocket?: "))
-chain_position = int(raw_input("  The bent spoke is now touching the the chain. How many chain links away is \n  the weak link?: ")) % chain_total_links
+tire_diameter = answerEval("  What's the rear tire's outer diameter in milimeters?: ", float)
+chain_total_links = answerEval("  How many links in the chain?: ", int)
+sprocket_total_teeth = answerEval("  How many teeth on the sprocket?: ", int)
+chain_position = answerEval("  The bent spoke is now touching the the chain. How many chain links away \n  is the weak link?: ", int) % chain_total_links
 
 tire_circumference = tire_diameter * pi # milimeters
 sprocket_revolutions = 0
