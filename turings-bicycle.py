@@ -60,13 +60,16 @@ while sprocket_revolutions < 501 and chain_on != 2:
     break
 
 # convert distance traveled to meters or kilometers if needed
-# def metric_conversion
-if distance_traveled > 1000:
-  units = 'meters'
-  distance_traveled /= 1000
-if distance_traveled > 1000:
-  units = 'kilometers'
-  distance_traveled /= 1000
+def metricConversion(distance_traveled, units):
+  if distance_traveled > 1000:
+    units = 'meters'
+    distance_traveled /= 1000
+  if distance_traveled > 1000:
+    units = 'kilometers'
+    distance_traveled /= 1000
+  return distance_traveled, units
+
+distance_traveled, units = metricConversion(distance_traveled, units)
 
 # give user the result
 if chain_on == 1:
