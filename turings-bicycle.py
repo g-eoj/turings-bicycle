@@ -1,11 +1,12 @@
 # todos:
-# cmd line controls
 # detect states where chain never falls off
 # specify wheel start position
 # readme - give users common bike info hints to questions?
 
 from math import pi
+from sys import argv
 from sys import exit
+from textwrap import dedent
 
 # function to ask user a question, test that the answer is a number, and return that number
 def ask(question, valueType):
@@ -22,7 +23,7 @@ def ask(question, valueType):
         print "  ^ Enter a positive number..."
 
 # function to calculate total distance bike can be ridden before chain falls off or if chain will never falll off
-def calcDistance(tire_diameter, chain_position, sprocket_total_teeth, chain_total_links, max_sprocket_revolutions):
+def calcDistance(tire_diameter, chain_position, sprocket_total_teeth, chain_total_links, max_sprocket_revolutions = 500):
   tire_circumference = tire_diameter * pi # milimeters
   sprocket_revolutions = 0
   distance_traveled = 0.0
@@ -69,33 +70,55 @@ def result(chain_on, distance_traveled, units):
   else:
     return "\nThe chain will never fall off.\n"
 
-# interactive shell
-# introduction
-print """
-Turing's bicycle has a rear rim with a bent spoke and a chain with a weak link.
-When the bent spoke and weak link come in contact with each other the chain
-falls off. Input some information about the bicycle to calculate how far 
-it can be ridden before the chain falls off:
-"""
+def interactiveShell():
+  # introduction
+  print dedent("""
+  Turing's bicycle has a rear rim with a bent spoke and a chain with a weak link.
+  When the bent spoke and weak link come in contact with each other the chain
+  falls off. Input some information about the bicycle to calculate how far 
+  it can be ridden before the chain falls off:
+  """)
 
-while True:
-  # get information about the bike from user
-  tire_diameter = ask("  What's the rear tire's outer diameter in milimeters?: ", float)
-  chain_total_links = ask("  How many links in the chain?: ", int)
-  sprocket_total_teeth = ask("  How many teeth on the sprocket?: ", int)
-  chain_position = ask("  The bent spoke is now touching the the chain. How many chain links away \n  is the weak link?: ", int) % chain_total_links
+  while True:
+    # get information about the bike from user
+    tire_diameter = ask("  What's the rear tire's outer diameter in milimeters?: ", float)
+    chain_total_links = ask("  How many links in the chain?: ", int)
+    sprocket_total_teeth = ask("  How many teeth on the sprocket?: ", int)
+    chain_position = ask("  The bent spoke is now touching the the chain. How many chain links away \n  is the weak link?: ", int) % chain_total_links
 
-  # calculate total distance bike can be ridden before chain falls off, 500 max_sprocket_revolutions is arbitrary
-  distance_traveled, chain_on = calcDistance(tire_diameter, chain_position, sprocket_total_teeth, chain_total_links, 500)
+    # calculate total distance bike can be ridden before chain falls off, 500 max_sprocket_revolutions is arbitrary
+    distance_traveled, chain_on = calcDistance(tire_diameter, chain_position, sprocket_total_teeth, chain_total_links, 500)
 
-  # convert distance traveled to meters or kilometers if needed
-  distance_traveled, units = metricConversion(distance_traveled)
+    # convert distance traveled to meters or kilometers if needed
+    distance_traveled, units = metricConversion(distance_traveled)
 
-  # give user the result
-  print result(chain_on, distance_traveled, units)
+    # give user the result
+    print result(chain_on, distance_traveled, units)
 
-  # check if user wants to try again
-  do_again = raw_input("Press enter to continue or type 'e' to exit: ")
-  if do_again == 'e':
+    # check if user wants to try again
+    do_again = raw_input("Press enter to continue or type 'e' to exit: ")
+    if do_again == 'e':
+      exit(0)
+    print "\r"
+
+
+if len(argv) == 1:
+  interactiveShell()
+else:
+  args = argv[1:]
+  if len(args) == 4:
+    td, ctl, stt, cp = args
+    msr = 500
+  elif len(args) == 5: # 5th argument can be used to specify max_sprocket_revolutions
+    td, ctl, stt, cp, msr = args 
+  else:
+    print 'Invalid input...'
     exit(0)
-  print "\r"
+
+  try:
+    distance_traveled, chain_on = calcDistance(float(td), int(cp), int(stt), int(ctl), int(msr))
+    distance_traveled, units = metricConversion(distance_traveled)
+    print result(chain_on, distance_traveled, units)
+  except ValueError:
+    print "Arguments need to be numbers..."
+    exit(0)
