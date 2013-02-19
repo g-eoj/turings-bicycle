@@ -1,7 +1,7 @@
+#!usr/bin/env python
 # todos:
 # proof that calculations will detect all states where chain never falls off
 # specify wheel start position
-# readme - give users common bike info hints to questions?
 # tests
 
 from math import pi
