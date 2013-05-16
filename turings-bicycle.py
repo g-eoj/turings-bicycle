@@ -1,5 +1,5 @@
 #!usr/bin/env python
-# todos:
+# TODO
 # proof that calculations will detect all states where chain never falls off
 # specify wheel start position
 # tests
@@ -9,8 +9,8 @@ from sys import argv, exit
 from textwrap import dedent
 
 
-# function to ask user a question, test that the answer is a number, and return that number
 def ask(question, valueType):
+    """asks user a question, test that the answer is a number, and return that number"""
     while True:
         try:
             answer = valueType(raw_input(question))
@@ -24,9 +24,9 @@ def ask(question, valueType):
                 print "  ^ Enter a positive number..."
 
 
-# function to calculate total distance bike can be ridden before chain falls off or if chain will never falll off
 def calcDistance(tire_diameter, chain_position, sprocket_total_teeth, chain_total_links, max_sprocket_revolutions):
-    tire_circumference = tire_diameter * pi  # milimeters
+    """calculate total distance bike can be ridden before chain falls off or if chain will never fall off"""
+    tire_circumference = tire_diameter * pi  # millimeters
     sprocket_revolutions = 0
     distance_traveled = 0.0
     chain_on = 1  # 0 - chain will fall off, 1 - chain may fall off eventually, 2 - chain will never fall off
@@ -52,9 +52,9 @@ def calcDistance(tire_diameter, chain_position, sprocket_total_teeth, chain_tota
     return distance_traveled, chain_on
 
 
-# function to convert distance traveled to meters or kilometers if needed
 def metricConversion(distance_traveled):
-    units = 'milimeters'
+    """convert distance traveled to meters or kilometers if needed"""
+    units = 'millimeters'
     if distance_traveled > 1000:
         units = 'meters'
         distance_traveled /= 1000
@@ -64,8 +64,8 @@ def metricConversion(distance_traveled):
     return distance_traveled, units
 
 
-# function to return result of calculations in readable format
 def result(chain_on, distance_traveled, units):
+    """return result of calculations in readable format"""
     if chain_on == 1:
         return "\nThe bike can be ridden at least %.2f %s before the chain falls off.\n" % (distance_traveled, units)
     elif chain_on == 0:
@@ -85,13 +85,15 @@ def interactiveShell():
 
     while True:
         # get information about the bike from user
-        tire_diameter = ask("  What's the rear tire's outer diameter in milimeters?: ", float)
+        tire_diameter = ask("  What's the rear tire's outer diameter in millimeters?: ", float)
         chain_total_links = ask("  How many links in the chain?: ", int)
         sprocket_total_teeth = ask("  How many teeth on the sprocket?: ", int)
-        chain_position = ask("  The bent spoke is now touching the the chain. How many chain links away \n  is the weak link?: ", int) % chain_total_links
+        chain_position = ask("  The bent spoke is now touching the chain. How many chain links away \n  is the weak link?: ", int) % chain_total_links
 
-        # calculate total distance bike can be ridden before chain falls off, 500 max_sprocket_revolutions is arbitrary
-        distance_traveled, chain_on = calcDistance(tire_diameter, chain_position, sprocket_total_teeth, chain_total_links, 500)
+        # calculate total distance bike can be ridden before chain falls off,
+        # 500 max_sprocket_revolutions is arbitrary
+        distance_traveled, chain_on = calcDistance(tire_diameter, chain_position,
+                                                   sprocket_total_teeth, chain_total_links, 500)
 
         # convert distance traveled to meters or kilometers if needed
         distance_traveled, units = metricConversion(distance_traveled)
@@ -119,7 +121,8 @@ else:
         print 'Invalid input...'
         exit(0)
     try:
-        distance_traveled, chain_on = calcDistance(float(td), int(cp), int(stt), int(ctl), int(msr))
+        distance_traveled, chain_on = calcDistance(float(td), int(cp), int(stt),
+                                                   int(ctl), int(msr))
         distance_traveled, units = metricConversion(distance_traveled)
         print result(chain_on, distance_traveled, units)
     except ValueError:
