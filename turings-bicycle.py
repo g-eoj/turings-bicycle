@@ -35,9 +35,8 @@ def calcDistance(tire_diameter, chain_position, sprocket_total_teeth, chain_tota
     if chain_total_links % 2 == 0 and sprocket_total_teeth % 2 == 0 and chain_position % 2 != 0:
         chain_on = 2
     elif chain_total_links % sprocket_total_teeth == 0:
-        positions = []
-        for i in range(chain_total_links / sprocket_total_teeth):
-            positions.append(i * sprocket_total_teeth + chain_position)
+        positions = [i * sprocket_total_teeth + chain_position
+                     for i in xrange(chain_total_links / sprocket_total_teeth)]
         if 0 not in positions:
             chain_on = 2
 
