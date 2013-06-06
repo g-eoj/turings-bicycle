@@ -107,23 +107,24 @@ def interactiveShell():
         print "\r"
 
 
-if len(argv) == 1:
-    interactiveShell()
-else:
-    args = argv[1:]
-    if len(args) == 4:
-        td, ctl, stt, cp = args
-        msr = 500
-    elif len(args) == 5:  # 5th argument can be used to specify max_sprocket_revolutions
-        td, ctl, stt, cp, msr = args
+if __name__ == '__main__':
+    if len(argv) == 1:
+        interactiveShell()
     else:
-        print 'Invalid input...'
-        exit(0)
-    try:
-        distance_traveled, chain_on = calcDistance(float(td), int(cp), int(stt),
-                                                   int(ctl), int(msr))
-        distance_traveled, units = metricConversion(distance_traveled)
-        print result(chain_on, distance_traveled, units)
-    except ValueError:
-        print "Arguments need to be numbers..."
-        exit(0)
+        args = argv[1:]
+        if len(args) == 4:
+            td, ctl, stt, cp = args
+            msr = 500
+        elif len(args) == 5:  # 5th argument can be used to specify max_sprocket_revolutions
+            td, ctl, stt, cp, msr = args
+        else:
+            print "Invalid input..."
+            exit(0)
+        try:
+            distance_traveled, chain_on = calcDistance(float(td), int(cp), int(stt),
+                                                       int(ctl), int(msr))
+            distance_traveled, units = metricConversion(distance_traveled)
+            print result(chain_on, distance_traveled, units)
+        except ValueError:
+            print "Arguments need to be numbers..."
+            exit(0)
